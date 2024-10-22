@@ -2,11 +2,11 @@
 
 |Labs|
 |:--------:|
-|[Lab1](Lab%201/README.md)|
-|[Lab2](Lab%202/README.md)|
-|[Lab3](lab%203/README.md)|
-|[Lab4](lab%204/README.md)|
-|[Lab5](lab%205/README.md)|
-|[Lab6](lab%206/README.md)|
-|[Lab7](lab%207/README.md)|
-|[Lab8](lab%208/README.md)|
+|[Lab1](LAB01/README.md)|
+|[Lab2](LAB02/README.md)|
+|[Lab3](LAB03/README.md)|
+|[Lab4](LAB04/README.md)|
+|[Lab5](LAB05/README.md)|
+|[Lab6](LAB06/README.md)|
+|[Lab7](LAB07/README.md)|
+|[Lab8](LAB08/README.md)|
