@@ -15,8 +15,8 @@ The ArcGIS Online tutorial used obesity data for the United States and the lab d
 
 ## App Link
 
-https://tamu.maps.arcgis.com/apps/instant/basic/index.html?appid=113d18140bab40b69fdeaf168a031d36
-
+[https://tamu.maps.arcgis.com/apps/instant/basic/index.html?appid=113d18140bab40b69fdeaf168a031d36
+](https://tamu.maps.arcgis.com/apps/instant/basic/index.html?appid=113d18140bab40b69fdeaf168a031d36)
 ### ArcGIS Collector
 
 The tutorial asked for the creation of a layer to collect data points related to a park (picnic tables, bathrooms, and water fountains).  Then the data was added in through the use of the Field Maps app.  I mapped the park near me called Bear Branch.
