@@ -1,0 +1,27 @@
+<!--Style for Resume-->
+body {
+  max-width: 900px;
+  max-height: 1800px;
+  margin: 1.5in;
+  padding: 1in;
+  text-align:left;
+  font-family:'Calibri';
+}
+.heading {
+	font-family:'Calibri';
+	text-align:center;
+}
+h1 { font-size: 27px;
+	color: darkblue;
+	font-family: 'cambria';
+}
+h3 { font-family:'cambria';
+	color: darkblue;
+}
+	
+p { font-family:'Calibri';
+}
+li { font-family: 'Calibri';
+}
+h5 {font-size: 15px;}
+a {color: black;}
