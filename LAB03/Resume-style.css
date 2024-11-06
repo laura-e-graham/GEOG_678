@@ -6,7 +6,10 @@ body {
   padding: 1in;
   text-align:left;
   font-family:'Calibri';
-}
+  background-image: url("texas-a-m-aggies-1.svg");
+  background-size: cover;
+  background-position: center;
+  }
 .heading {
 	font-family:'Calibri';
 	text-align:center;
@@ -25,3 +28,7 @@ li { font-family: 'Calibri';
 }
 h5 {font-size: 15px;}
 a {color: black;}
+img {
+  width: 200px;
+  height: 150px;
+}
