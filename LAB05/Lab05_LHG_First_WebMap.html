@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texas A&M Campus Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #mapid {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+   <div id="mapid"></div>
+   <script>
+   // Initialize map
+   var map = L.map('mapid').setView([30.610670, -96.340], 15);
+
+   // Add tile layer
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+     maxZoom: 19,
+     minZoom: 10
+   }).addTo(map);
+
+   // User geolocation
+   map.locate({setView: false, maxZoom: 16});
+
+   function onLocationFound(e) {
+     var radius = e.accuracy / 2;
+     L.marker(e.latlng)
+       .addTo(map)
+       .bindPopup("Your current location")
+       .openPopup();
+     L.circle(e.latlng, radius).addTo(map);
+   }
+   map.on('locationfound', onLocationFound);
+
+   function onLocationError(e) {
+     console.warn("Location error: " + e.message);
+   }
+   map.on('locationerror', onLocationError);
+
+   // Kyle Field marker
+   var kyleFieldMarker = L.marker([30.610670, -96.340], {
+     title: 'Kyle Field'
+   }).addTo(map)
+     .bindPopup("<b>Kyle Field</b><br>Home of Aggie Football");
+
+   // Kyle Field circle
+   L.circle([30.610670, -96.340], {
+     color: 'maroon',
+     fillColor: '#500000',
+     fillOpacity: 0.2,
+     radius: 300
+   }).addTo(map);
+
+   // Custom TAMU icon
+   var tamuIcon = L.icon({
+     iconUrl: 'https://www.tamu.edu/_files/images/logos/primaryTAM.png',
+     iconSize: [50, 50],
+     iconAnchor: [25, 25],
+     popupAnchor: [0, -25]
+   });
+
+   // O&M Building marker
+   L.marker([30.617742, -96.336657], {
+     icon: tamuIcon,
+     title: 'O&M Building'
+   }).addTo(map)
+     .bindPopup("O&M Building");
+   </script>	
+  </body>
+</html>

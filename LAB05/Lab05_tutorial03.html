@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab05_tutorial03</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #mapid {
+        height: 100vh; /* 100% of the viewport height */
+        width: 100%; /* Full width */
+      }
+    </style>
+  </head>
+  <body>
+   <div id="mapid"></div>
+   <script>
+   // Initialize map
+   var map = L.map('mapid').setView([51.505, -0.09], 13);
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: '© OpenStreetMap contributors'
+   }).addTo(map);
+
+   // Define custom icon class
+   var LeafIcon = L.Icon.extend({
+     options: {
+       shadowUrl: 'https://jgengle.github.io/Leaflet/examples/custom-icons/leaf-shadow.png',
+       iconSize:     [38, 95],
+       shadowSize:   [50, 64],
+       iconAnchor:   [22, 94],
+       shadowAnchor: [4, 62],
+       popupAnchor:  [-3, -76]
+     }
+   });
+
+   // Create specific icons
+   var greenIcon = new LeafIcon({
+     iconUrl: 'https://jgengle.github.io/Leaflet/examples/custom-icons/leaf-green.png'
+   });
+   var redIcon = new LeafIcon({
+     iconUrl: 'https://jgengle.github.io/Leaflet/examples/custom-icons/leaf-red.png'
+   });
+   var orangeIcon = new LeafIcon({
+     iconUrl: 'https://jgengle.github.io/Leaflet/examples/custom-icons/leaf-orange.png'
+   });
+
+   // Add markers with custom icons
+   L.marker([51.5, -0.09], {icon: greenIcon})
+     .addTo(map)
+     .bindPopup("I am a green leaf.");
+
+   L.marker([51.495, -0.083], {icon: redIcon})
+     .addTo(map)
+     .bindPopup("I am a red leaf.");
+
+   L.marker([51.49, -0.1], {icon: orangeIcon})
+     .addTo(map)
+     .bindPopup("I am an orange leaf.");
+   </script>	
+  </body>
+</html>

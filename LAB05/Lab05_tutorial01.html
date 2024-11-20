@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab05_tutorial01</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #mapid {
+        height: 100vh; /* 100% of the viewport height */
+        width: 100%; /* Full width */
+      }
+    </style>
+  </head>
+  <body>
+   <div id="mapid"></div>
+   <script><!--initalize map-->
+   var map = L.map('mapid').setView([51.505, -0.09], 13);
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: '© OpenStreetMap contributors'
+   }).addTo(map);
+<!-- add circle-->
+   var marker = L.marker([51.5, -0.09]).addTo(map);
+   var circle = L.circle([51.508, -0.11], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+	}).addTo(map);
+<!--add polygon-->
+	var polygon = L.polygon([
+    [51.509, -0.08],
+    [51.503, -0.06],
+    [51.51, -0.047]
+	]).addTo(map);
+<!--add marker and popup-->
+	marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+	circle.bindPopup("I am a circle.");
+	polygon.bindPopup("I am a polygon.");
+<!--add lat and long click feature -->
+	function onMapClick(e) {
+    alert("You clicked the map at " + e.latlng);
+	}
+
+	map.on('click', onMapClick);
+	map.locate({setView: true, maxZoom: 16});
+   </script>	
+  </body>
+</html>
