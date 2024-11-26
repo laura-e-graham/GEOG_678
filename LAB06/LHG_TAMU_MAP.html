@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texas A&M University Buildings Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+      #map { 
+        height: 600px; 
+        width: 100%; 
+      }
+      .building-highlight {
+        stroke: yellow;
+        stroke-width: 3;
+        fill-opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="building-info"></div>
+
+    <script src="tamubuildings.js"></script>
+    <script>
+      // Initialize the map
+      var map = L.map('map').setView([30.6186, -96.3365], 15);
+
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Declare geojsonLayer in a broader scope
+      var geojsonLayer;
+
+      // Style for buildings
+      function buildingStyle(feature) {
+        return {
+          color: 'maroon',
+          fillColor: 'maroon',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.5
+        };
+      }
+
+      // Function to handle building highlighting
+      function highlightBuilding(e) {
+        var layer = e.target;
+        
+        // Reset all buildings to original style
+        geojsonLayer.eachLayer(function(l) {
+          geojsonLayer.resetStyle(l);
+        });
+
+        // Highlight current building
+        layer.setStyle({
+          color: 'yellow',
+          fillColor: 'yellow',
+          weight: 3,
+          fillOpacity: 0.7
+        });
+
+        // Update building info
+        document.getElementById('building-info').innerHTML = 
+          '<strong>Building Name:</strong> ' + layer.feature.properties.BldgName +
+          '<br><strong>Building Abbriviation:</strong> ' + layer.feature.properties.BldgAbbr;
+      }
+
+      // Function to reset building style
+      function resetHighlight(e) {
+        geojsonLayer.resetStyle(e.target);
+        document.getElementById('building-info').innerHTML = 'Hover over a building for details';
+      }
+
+      // Function to zoom to building
+      function zoomToBuilding(e) {
+        map.fitBounds(e.target.getBounds());
+      }
+
+      // Wait for tamubuildings.js to load
+      document.addEventListener('DOMContentLoaded', function() {
+        // Ensure tamu variable is defined in tamubuildings.js
+        if (typeof tamu !== 'undefined') {
+          // Create GeoJSON layer with event handlers
+          geojsonLayer = L.geoJSON(tamu, {
+            style: buildingStyle,
+            onEachFeature: function(feature, layer) {
+              layer.on({
+                mouseover: highlightBuilding,
+                mouseout: resetHighlight,
+                click: zoomToBuilding
+              });
+            }
+          }).addTo(map);
+        } else {
+          console.error('TAMU buildings data not loaded. Check tamubuildings.js');
+        }
+      });
+
+      // Initial info text
+      document.getElementById('building-info').innerHTML = 'Hover over a building for details';
+    </script>
+  </body>
+</html>
