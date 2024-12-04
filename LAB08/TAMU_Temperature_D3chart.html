@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TAMU Temperature D3</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+  </head>
+  <body>
+
+    <div id="chart"></div>
+    <script>
+// CSV data
+const csvData = `date,High Temp,Low Temp
+Sat,82,67
+Sun,81,59
+Mon,81,50
+Tue,70,47
+Wed,77,51
+Thur,78,60
+Fri,79,66
+sat ,80,66`;
+
+// Parse CSV
+const data = d3.csvParse(csvData, d3.autoType);
+
+// Chart dimensions
+const width = 928;
+const height = 500;
+const marginTop = 50;
+const marginRight = 50;
+const marginBottom = 50;
+const marginLeft = 50;
+
+// Create chart
+function createChart() {
+  // Scales
+  const x = d3.scaleBand()
+    .domain(data.map(d => d.date))
+    .range([marginLeft, width - marginRight])
+    .padding(0.1);
+
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => Math.max(d['High Temp'], d['Low Temp']))])
+    .range([height - marginBottom, marginTop]);
+
+  // Create SVG
+  const svg = d3.select("#chart").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height]);
+
+  // Main title
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", marginTop / 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "20px")
+    .style("font-weight", "bold")
+    .text("Weekly Temperature in College Station");
+
+  // X-axis
+  svg.append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(x));
+
+  // Y-axis
+  svg.append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(d3.axisLeft(y).tickFormat(d => `${d}°F`));
+
+  // Y-axis label
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height / 2)
+    .attr("y", 15)
+    .style("text-anchor", "middle")
+    .text("Temperature (°F)");
+
+  // Line generator
+  const highTempLine = d3.line()
+    .x(d => x(d.date) + x.bandwidth() / 2)
+    .y(d => y(d['High Temp']));
+
+  const lowTempLine = d3.line()
+    .x(d => x(d.date) + x.bandwidth() / 2)
+    .y(d => y(d['Low Temp']));
+
+  // Draw High Temp line
+  svg.append("path")
+    .datum(data)
+    .attr("fill", "none")
+    .attr("stroke", "red")
+    .attr("stroke-width", 2)
+    .attr("d", highTempLine);
+
+  // Draw Low Temp line
+  svg.append("path")
+    .datum(data)
+    .attr("fill", "none")
+    .attr("stroke", "blue")
+    .attr("stroke-width", 2)
+    .attr("d", lowTempLine);
+
+  // Add labels
+  svg.append("text")
+    .attr("x", width - 100)
+    .attr("y", y(data[data.length-1]['High Temp']))
+    .attr("fill", "red")
+    .text("High Temp");
+
+  svg.append("text")
+    .attr("x", width - 100)
+    .attr("y", y(data[data.length-1]['Low Temp']))
+    .attr("fill", "blue")
+    .text("Low Temp");
+}
+
+// Render chart
+createChart();
+    </script>
+  </body>
+</html>
